@@ -26,5 +26,14 @@ RSpec.describe RbPipeOperator do
 
       expect(actual).to eq 6
     end
+
+    it 'evaluates a code that uses the closure' do
+      scale = 2
+      actual = RbPipeOperator.enable do
+        [1, 2] .|> -> x { x.sum } .|> -> x { x * scale }
+      end
+
+      expect(actual).to eq 6
+    end
   end
 end

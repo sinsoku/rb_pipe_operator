@@ -52,6 +52,6 @@ module RbPipeOperator
     end
 
     replaced_code = buf.join("\n")
-    eval(replaced_code)
+    block.binding.eval(replaced_code)
   end
 end
