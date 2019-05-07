@@ -1,9 +1,30 @@
-RSpec.describe RbPipeOperator do
-  it "has a version number" do
-    expect(RbPipeOperator::VERSION).not_to be nil
-  end
+# frozen_string_literal: true
 
-  it "does something useful" do
-    expect(false).to eq(true)
+RSpec.describe RbPipeOperator do
+  describe '.enable' do
+    it 'evaluates a code' do
+      actual = RbPipeOperator.enable do
+        [1, 2] .|> -> x { x.sum }
+      end
+
+      expect(actual).to eq 3
+    end
+
+    it 'evaluates a code that uses the method chain' do
+      actual = RbPipeOperator.enable do
+        [1, 2] .|> -> x { x.sum } .|> -> x { x * 2 }
+      end
+
+      expect(actual).to eq 6
+    end
+
+    it 'evaluates a code that uses the variable' do
+      actual = RbPipeOperator.enable do
+        scale = 2
+        [1, 2] .|> -> x { x.sum } .|> -> x { x * scale }
+      end
+
+      expect(actual).to eq 6
+    end
   end
 end
