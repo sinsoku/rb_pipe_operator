@@ -35,5 +35,16 @@ RSpec.describe RbPipeOperator do
 
       expect(actual).to eq 6
     end
+
+    it 'evaluates a code that uses the proc object' do
+      a = -> x { x.sum }
+      b = -> x { x * 2 }
+
+      actual = RbPipeOperator.enable do
+        [1, 2] .|> a .|> b
+      end
+
+      expect(actual).to eq 6
+    end
   end
 end
