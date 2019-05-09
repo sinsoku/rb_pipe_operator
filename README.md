@@ -1,28 +1,29 @@
 # RbPipeOperator
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rb_pipe_operator`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'rb_pipe_operator'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install rb_pipe_operator
+It provides the pipe operator using `RubyVM::AbstractSyntaxTree.of`.
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+RbPipeOperator.enable do
+  [1, 2] .|> -> x { x.sum }
+end
+#=> 3
+
+RbPipeOperator.enable do
+  [1, 2] .|> -> x { x.sum } .|> -> x { x * 2 }
+end
+#=> 6
+
+
+a = -> x { x.sum }
+b = -> x { x * 2 }
+
+RbPipeOperator.enable do
+  [1, 2] .|> a .|> b
+end
+#=> 6
+```
 
 ## Development
 
